@@ -105,7 +105,7 @@ function Highlights() {
     useEffect(() => {
         highlightRefs.current.forEach((highlight) => {
             const description = highlight?.querySelector('.highlight__description')
-            gsap.to((description), {
+            gsap.to((description as any), {
                 scrollTrigger: {
                     trigger: description,
                     scroller: '.highlights__container',

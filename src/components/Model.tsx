@@ -12,26 +12,14 @@ function Model() {
 
     const [model, setModel] = useState(models[variation.type].colors[0])
 
-    console.log(model)
     //model container
     const modelContainer = useRef<HTMLDivElement | null>(null)
-    // Camera control for each model
-    const cameraControlNormalSmall = useRef()
-    const cameraControlNormalLarge = useRef()
-    const cameraControlProNormalSmall = useRef()
-    const cameraControlProNormalLarge = useRef()
 
     // models
     const smallNormal = useRef(new THREE.Group())
     const largeNormal = useRef(new THREE.Group())
     const smallPro = useRef(new THREE.Group())
     const largePro = useRef(new THREE.Group())
-
-    // rotation
-    const [smallRotation, setSmallRotation] = useState()
-    const [largeRotation, setLargeRotation] = useState()
-    const [smallProRotation, setSmallProRotation] = useState()
-    const [largeProRotation, setLargeProRotation] = useState()
 
     const renderSizeClass = (size: string) => {
         let sizeClass = 'iPhone-size'

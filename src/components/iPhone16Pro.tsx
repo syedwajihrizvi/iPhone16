@@ -6,14 +6,15 @@ Source: https://sketchfab.com/3d-models/iphone-16-pro-max-41a071ae12794b668502f5
 Title: iPhone 16 Pro Max
 */
 
-import React, { useRef, useEffect } from 'react'
+import { useEffect } from 'react'
 import { useGLTF } from '@react-three/drei'
 import * as THREE from 'three'
 
 const colorPatterns = {
     desertTitanium: {
       mainShade: "#BFA48F",
-      secondaryShade: '#CBBAAB'
+      secondaryShade: '#CBBAAB',
+      screenColor: ''
     },
     naturalTitanium: {
       mainShade: '#C2BCB2',
@@ -32,21 +33,28 @@ const colorPatterns = {
     }
   }
 
-function IPhonePro(props) {
+interface Props {
+  color: any,
+  items?: any,
+  scale: any
+}
+
+function IPhonePro(props: Props) {
   const { nodes, materials } = useGLTF('/models/iphone16_pro.glb')
   useEffect(() => {
-        const { mainShade, secondaryShade, screenColor} = colorPatterns[props.color]
+        const { mainShade, secondaryShade, screenColor} = colorPatterns[props.color as keyof typeof colorPatterns]
         Object.entries(materials).map(material => {
+            const mat = material[1] as THREE.MeshStandardMaterial
             if (material[0] == 'basecolor.001' || 
                 material[0] == 'metalframe.002' || 
                 material[0] == 'screen.001') {
-                material[1].color = new THREE.Color(mainShade)
+                mat.color = new THREE.Color(mainShade)
             }
             if (material[0] == 'apple_logo.001') {
-                material[1].color = new THREE.Color(secondaryShade)
+                mat.color = new THREE.Color(secondaryShade)
             }
             if (material[0] == 'screen.001') {
-                material[1].color = new THREE.Color(screenColor)
+                mat.color = new THREE.Color(screenColor)
             }
         })
   }, [materials, props.items, props.color])
@@ -57,43 +65,43 @@ function IPhonePro(props) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes.Cube014_black002_0.geometry}
+            geometry={(nodes.Cube014_black002_0 as THREE.Mesh).geometry}
             material={materials['black.002']}
           />
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes.Cube014_basecolor001_0.geometry}
+            geometry={(nodes.Cube014_basecolor001_0 as THREE.Mesh).geometry}
             material={materials['basecolor.001']}
           />
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes.Cube014_metalframe002_0.geometry}
+            geometry={(nodes.Cube014_metalframe002_0 as THREE.Mesh).geometry}
             material={materials['metalframe.002']}
           />
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes.Cube014_metaL001_0.geometry}
+            geometry={(nodes.Cube014_metaL001_0 as THREE.Mesh).geometry}
             material={materials['metaL.001']}
           />
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes.Cube014_glass002_0.geometry}
+            geometry={(nodes.Cube014_glass002_0 as THREE.Mesh).geometry}
             material={materials['glass.002']}
           />
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes.Cube014_apple_logo001_0.geometry}
+            geometry={(nodes.Cube014_apple_logo001_0 as THREE.Mesh).geometry}
             material={materials['apple_logo.001']}
           />
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes.Cube014_screen001_0.geometry}
+            geometry={(nodes.Cube014_screen001_0 as THREE.Mesh).geometry}
             material={materials['screen.001']}
           />
         </group>
@@ -101,13 +109,13 @@ function IPhonePro(props) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes.Cube016_black002_0.geometry}
+            geometry={(nodes.Cube016_black002_0 as THREE.Mesh).geometry}
             material={materials['black.002']}
           />
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes.Cube016_glass002_0.geometry}
+            geometry={(nodes.Cube016_glass002_0 as THREE.Mesh).geometry}
             material={materials['glass.002']}
           />
         </group>
@@ -118,13 +126,13 @@ function IPhonePro(props) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes.Cube017_metalframe002_0.geometry}
+            geometry={(nodes.Cube017_metalframe002_0 as THREE.Mesh).geometry}
             material={materials['metalframe.002']}
           />
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes.Cube017_black002_0.geometry}
+            geometry={(nodes.Cube017_black002_0 as THREE.Mesh).geometry}
             material={materials['black.002']}
           />
         </group>
@@ -135,13 +143,13 @@ function IPhonePro(props) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes.Cylinder018_metalframe002_0.geometry}
+            geometry={(nodes.Cylinder018_metalframe002_0 as THREE.Mesh).geometry}
             material={materials['metalframe.002']}
           />
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes.Cylinder018_black002_0.geometry}
+            geometry={(nodes.Cylinder018_black002_0 as THREE.Mesh).geometry}
             material={materials['black.002']}
           />
         </group>
@@ -152,13 +160,13 @@ function IPhonePro(props) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes.Cylinder019_metalframe002_0.geometry}
+            geometry={(nodes.Cylinder019_metalframe002_0 as THREE.Mesh).geometry}
             material={materials['metalframe.002']}
           />
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes.Cylinder019_black002_0.geometry}
+            geometry={(nodes.Cylinder019_black002_0 as THREE.Mesh).geometry}
             material={materials['black.002']}
           />
         </group>
@@ -169,13 +177,13 @@ function IPhonePro(props) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes.Cylinder020_metalframe002_0.geometry}
+            geometry={(nodes.Cylinder020_metalframe002_0 as THREE.Mesh).geometry}
             material={materials['metalframe.002']}
           />
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes.Cylinder020_black002_0.geometry}
+            geometry={(nodes.Cylinder020_black002_0 as THREE.Mesh).geometry}
             material={materials['black.002']}
           />
         </group>
@@ -183,13 +191,13 @@ function IPhonePro(props) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes.Cylinder021_metalframe002_0.geometry}
+            geometry={(nodes.Cylinder021_metalframe002_0 as THREE.Mesh).geometry}
             material={materials['metalframe.002']}
           />
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes.Cylinder021_Material_0.geometry}
+            geometry={(nodes.Cylinder021_Material_0 as THREE.Mesh).geometry}
             material={materials.Material}
           />
         </group>
@@ -200,20 +208,20 @@ function IPhonePro(props) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes.Plane011_glass002_0.geometry}
+            geometry={(nodes.Plane011_glass002_0 as THREE.Mesh).geometry}
             material={materials['glass.002']}
           />
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes.Plane011_basecolor001_0.geometry}
+            geometry={(nodes.Plane011_basecolor001_0 as THREE.Mesh).geometry}
             material={materials['basecolor.001']}
           />
         </group>
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes.Circle010_black002_0.geometry}
+          geometry={(nodes.Circle010_black002_0 as THREE.Mesh).geometry}
           material={materials['black.002']}
           position={[7.94, 61.852, 6.767]}
           rotation={[-Math.PI / 2, Math.PI / 2, 0]}
@@ -222,7 +230,7 @@ function IPhonePro(props) {
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes.Circle011_black002_0.geometry}
+          geometry={(nodes.Circle011_black002_0 as THREE.Mesh).geometry}
           material={materials['black.002']}
           position={[7.825, 71.855, 25.405]}
           rotation={[-Math.PI / 2, Math.PI / 2, 0]}
@@ -231,7 +239,7 @@ function IPhonePro(props) {
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes.Circle012_black002_0.geometry}
+          geometry={(nodes.Circle012_black002_0 as THREE.Mesh).geometry}
           material={materials['black.002']}
           position={[7.924, 51.987, 25.288]}
           rotation={[-Math.PI / 2, Math.PI / 2, 0]}
@@ -240,7 +248,7 @@ function IPhonePro(props) {
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes.Circle013_black002_0.geometry}
+          geometry={(nodes.Circle013_black002_0 as THREE.Mesh).geometry}
           material={materials['black.002']}
           position={[-4.604, 78.558, 7.249]}
           rotation={[Math.PI / 2, -Math.PI / 2, 0]}
@@ -249,7 +257,7 @@ function IPhonePro(props) {
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes.Cube015_Material001_0.geometry}
+          geometry={(nodes.Cube015_Material001_0 as THREE.Mesh).geometry}
           material={materials['Material.001']}
           position={[0.034, -79.376, -0.696]}
           rotation={[-Math.PI / 2, 0, 0]}
@@ -258,7 +266,7 @@ function IPhonePro(props) {
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes.Cylinder022_black002_0.geometry}
+          geometry={(nodes.Cylinder022_black002_0 as THREE.Mesh).geometry}
           material={materials['black.002']}
           position={[0.848, 47.824, 6.803]}
           rotation={[-Math.PI / 2, Math.PI / 2, 0]}
@@ -267,7 +275,7 @@ function IPhonePro(props) {
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes.len11001_glass002_0.geometry}
+          geometry={(nodes.len11001_glass002_0 as THREE.Mesh).geometry}
           material={materials['glass.002']}
           position={[5.382, 71.83, 25.412]}
           rotation={[-Math.PI / 2, Math.PI / 2, 0]}
@@ -276,7 +284,7 @@ function IPhonePro(props) {
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes.len22001_glass002_0.geometry}
+          geometry={(nodes.len22001_glass002_0 as THREE.Mesh).geometry}
           material={materials['glass.002']}
           position={[5.382, 61.853, 6.769]}
           rotation={[-Math.PI / 2, Math.PI / 2, 0]}
@@ -285,7 +293,7 @@ function IPhonePro(props) {
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes.len33001_glass002_0.geometry}
+          geometry={(nodes.len33001_glass002_0 as THREE.Mesh).geometry}
           material={materials['glass.002']}
           position={[5.382, 51.985, 25.276]}
           rotation={[-Math.PI / 2, Math.PI / 2, 0]}
@@ -294,7 +302,7 @@ function IPhonePro(props) {
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes.Object003_gray001_0.geometry}
+          geometry={(nodes.Object003_gray001_0 as THREE.Mesh).geometry}
           material={materials['gray.001']}
           position={[-0.191, -80.599, -0.721]}
           rotation={[-Math.PI / 2, 0, 0]}
@@ -303,7 +311,7 @@ function IPhonePro(props) {
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes.Plane012_metalframe002_0.geometry}
+          geometry={(nodes.Plane012_metalframe002_0 as THREE.Mesh).geometry}
           material={materials['metalframe.002']}
           position={[5.367, 51.214, 0.79]}
           rotation={[-Math.PI / 4, Math.PI / 2, 0]}
@@ -312,7 +320,7 @@ function IPhonePro(props) {
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes.Plane013_metaL001_0.geometry}
+          geometry={(nodes.Plane013_metaL001_0 as THREE.Mesh).geometry}
           material={materials['metaL.001']}
           position={[-0.219, -81.443, 11.407]}
           rotation={[Math.PI / 2, 0, -2.356]}
@@ -321,7 +329,7 @@ function IPhonePro(props) {
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes.Plane014_metaL001_0.geometry}
+          geometry={(nodes.Plane014_metaL001_0 as THREE.Mesh).geometry}
           material={materials['metaL.001']}
           position={[-0.219, -81.443, -20.018]}
           rotation={[Math.PI / 2, 0, -2.356]}
@@ -330,7 +338,7 @@ function IPhonePro(props) {
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes.Sphere010_lensinglass_0.geometry}
+          geometry={(nodes.Sphere010_lensinglass_0 as THREE.Mesh).geometry}
           material={materials.lensinglass}
           position={[7.297, 71.865, 25.4]}
           rotation={[-Math.PI / 2, 0, 0]}
@@ -339,7 +347,7 @@ function IPhonePro(props) {
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes.Sphere011_lensinglass_0.geometry}
+          geometry={(nodes.Sphere011_lensinglass_0 as THREE.Mesh).geometry}
           material={materials.lensinglass}
           position={[7.337, 51.995, 25.291]}
           rotation={[-Math.PI / 2, 0, 0]}
@@ -348,7 +356,7 @@ function IPhonePro(props) {
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes.Sphere012_lensinglass_0.geometry}
+          geometry={(nodes.Sphere012_lensinglass_0 as THREE.Mesh).geometry}
           material={materials.lensinglass}
           position={[7.375, 61.87, 6.748]}
           rotation={[-Math.PI / 2, 0, 0]}
@@ -357,7 +365,7 @@ function IPhonePro(props) {
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes.Sphere013_lensinglass_0.geometry}
+          geometry={(nodes.Sphere013_lensinglass_0 as THREE.Mesh).geometry}
           material={materials.lensinglass}
           position={[-4.094, 78.567, 7.254]}
           rotation={[-Math.PI / 2, 0, -Math.PI]}

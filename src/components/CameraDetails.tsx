@@ -1,6 +1,6 @@
 import { cameraDetails } from "../utils/image"
 import ResponsiveImage from "./ResponsiveImage"
-import { detailOne, detailTwo, detailThree, detailFour } from "../utils/image"
+import { detailOne, detailTwo, detailThree } from "../utils/image"
 import { useState } from "react"
 import gsap from "gsap"
 import { useGSAP } from "@gsap/react"

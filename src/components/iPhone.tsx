@@ -6,7 +6,7 @@ Source: https://sketchfab.com/3d-models/iphone-16-free-d58591e88a824dfd8cef0af61
 Title: iPhone 16 - Free
 */
 import * as THREE from 'three'
-import React, { useRef, useEffect } from 'react'
+import { useEffect } from 'react'
 import { useGLTF } from '@react-three/drei'
 
 const logoMaterialID = 'b4ad12de1fcbdd61166e'
@@ -53,27 +53,35 @@ const colorPatterns = {
   }
 }
 
-function IPhone(props) {
+interface Props {
+  color: any,
+  items?: any,
+  scale: any
+}
+
+function IPhone(props: Props) {
   const { nodes, materials } = useGLTF('/models/iphone16.glb')
-  const { mainShade, darkShade, secondaryDarkShade } = colorPatterns[props.color]
+  const { mainShade, darkShade, secondaryDarkShade } = colorPatterns[props.color as keyof typeof colorPatterns]
 
   useEffect(() => {
-    Object.entries(materials).map(material => {
+    Object.entries(materials).map(material=> {
       // Main light shade
+      const mat = material[1] as THREE.MeshStandardMaterial
       if (material[0] == backColor || material[0] == cameraFrameID || 
           material[0] == cameraInnerFrameID || material[0] == chargeFrameColor ||
           material[0] == phoneBorder || material[0] == spotlightBorder || 
-          material[0] == logoMaterialID || material[0] == chargeColor || material[0] == logoBorderID) {
-        material[1].color = new THREE.Color(mainShade)
+          material[0] == logoMaterialID || material[0] == chargeColor || 
+          material[0] == logoBorderID) {
+        mat.color = new THREE.Color(mainShade)
       } 
       // Main dark shade
       else if (material[0] == sideRibbonsColor  || material[0] == sideBottomButtonInside ||
               material[0] == sideButtomButtonInsideShade || material[0] == cameraOuterFrameID) {
-        material[1].color = new THREE.Color(darkShade)
+        mat.color = new THREE.Color(darkShade)
       }
       // Main secondary dark shade
       else if (material[0] == sideButtons || material[0] == sideBottomButtonBorder) {
-        material[1].color = new THREE.Color(secondaryDarkShade)
+        mat.color = new THREE.Color(secondaryDarkShade)
       }
     })
   }, [materials, props.items, props.color])
@@ -84,248 +92,248 @@ function IPhone(props) {
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes.Object_12.geometry}
+            geometry={(nodes.Object_12 as THREE.Mesh).geometry}
             material={materials.d79c406d92ac2ea2b462}
           />
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes.Object_14.geometry}
+            geometry={(nodes.Object_14 as THREE.Mesh).geometry}
             material={materials['8ed052ed6d3cd71ab5e3']}
           />
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes.Object_16.geometry}
+            geometry={(nodes.Object_16 as THREE.Mesh).geometry}
             material={materials['5155c9eac3acd76d34a9']}
           />
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes.Object_18.geometry}
+            geometry={(nodes.Object_18 as THREE.Mesh).geometry}
             material={materials['4130c6244c49c5d5712e']}
           />
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes.Object_20.geometry}
+            geometry={(nodes.Object_20 as THREE.Mesh).geometry}
             material={materials.a18b462c494e4fd29b4b}
           />
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes.Object_23.geometry}
+            geometry={(nodes.Object_23 as THREE.Mesh).geometry}
             material={materials.dee5a626f928a5fa4c28}
           />
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes.Object_25.geometry}
+            geometry={(nodes.Object_25 as THREE.Mesh).geometry}
             material={materials.e73cdd81f0248824c66f}
           />
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes.Object_27.geometry}
+            geometry={(nodes.Object_27 as THREE.Mesh).geometry}
             material={materials['5d66e4713803a9e0ad46']}
           />
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes.Object_29.geometry}
+            geometry={(nodes.Object_29 as THREE.Mesh).geometry}
             material={materials['3b9594ccffa1d862f699']}
           />
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes.Object_31.geometry}
+            geometry={(nodes.Object_31 as THREE.Mesh).geometry}
             material={materials['3a020e0705c66463c666']}
           />
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes.Object_33.geometry}
+            geometry={(nodes.Object_33 as THREE.Mesh).geometry}
             material={materials['8293fe999d10eb51dc07']}
           />
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes.Object_36.geometry}
+            geometry={(nodes.Object_36 as THREE.Mesh).geometry}
             material={materials.b23162de4d8409eb15f1}
           />
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes.Object_38.geometry}
+            geometry={(nodes.Object_38 as THREE.Mesh).geometry}
             material={materials.e7fedd2cefc789ae4070}
           />
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes.Object_40.geometry}
+            geometry={(nodes.Object_40 as THREE.Mesh).geometry}
             material={materials.cf3bfd3f874c6277f037}
           />
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes.Object_42.geometry}
+            geometry={(nodes.Object_42 as THREE.Mesh).geometry}
             material={materials['483cd8d2505fcf4cc33c']}
           />
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes.Object_44.geometry}
+            geometry={(nodes.Object_44 as THREE.Mesh).geometry}
             material={materials['13fa87e9b9ea638526bb']}
           />
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes.Object_46.geometry}
+            geometry={(nodes.Object_46 as THREE.Mesh).geometry}
             material={materials.cecc91181f1dafcc19fa}
           />
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes.Object_48.geometry}
+            geometry={(nodes.Object_48 as THREE.Mesh).geometry}
             material={materials['2df164b7997e629e4d7e']}
           />
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes.Object_50.geometry}
+            geometry={(nodes.Object_50 as THREE.Mesh).geometry}
             material={materials['103fc094f5cdada7aa57']}
           />
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes.Object_52.geometry}
+            geometry={(nodes.Object_52 as THREE.Mesh).geometry}
             material={materials['25fa7b29639901e1f310']}
           />
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes.Object_54.geometry}
+            geometry={(nodes.Object_54 as THREE.Mesh).geometry}
             material={materials['299a045923a299d97c82']}
           />
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes.Object_57.geometry}
+            geometry={(nodes.Object_57 as THREE.Mesh).geometry}
             material={materials['82823ff934002f16e6e0']}
             position={[0, 0, 0.037]}
           />
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes.Object_59.geometry}
+            geometry={(nodes.Object_59 as THREE.Mesh).geometry}
             material={materials.b4ad12de1fcbdd61166e}
           />
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes.Object_62.geometry}
+            geometry={(nodes.Object_62 as THREE.Mesh).geometry}
             material={materials.ec12d37933cc378c1226}
           />
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes.Object_65.geometry}
+            geometry={(nodes.Object_65 as THREE.Mesh).geometry}
             material={materials.bfb52a03e58fd454437d}
           />
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes.Object_67.geometry}
+            geometry={(nodes.Object_67 as THREE.Mesh).geometry}
             material={materials['906edd797edf30e1b5ca']}
           />
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes.Object_70.geometry}
+            geometry={(nodes.Object_70 as THREE.Mesh).geometry}
             material={materials.c306087c056eb775dddc}
           />
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes.Object_72.geometry}
+            geometry={(nodes.Object_72 as THREE.Mesh).geometry}
             material={materials['4a6c96a0e91c63810afa']}
           />
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes.Object_74.geometry}
+            geometry={(nodes.Object_74 as THREE.Mesh).geometry}
             material={materials['4e2775e8ab652e8ec892']}
           />
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes.Object_77.geometry}
+            geometry={(nodes.Object_77 as THREE.Mesh).geometry}
             material={materials.c1f38c49c59514a1f2d9}
           />
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes.Object_80.geometry}
+            geometry={(nodes.Object_80 as THREE.Mesh).geometry}
             material={materials.b8c5608ba04260006bf0}
           />
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes.Object_82.geometry}
+            geometry={(nodes.Object_82 as THREE.Mesh).geometry}
             material={materials['091912dc178e0b223122']}
           />
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes.Object_84.geometry}
+            geometry={(nodes.Object_84 as THREE.Mesh).geometry}
             material={materials['6a2b4bcac74a0306e361']}
           />
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes.Object_86.geometry}
+            geometry={(nodes.Object_86 as THREE.Mesh).geometry}
             material={materials.f960f58dcaeee45e59c1}
           />
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes.Object_88.geometry}
+            geometry={(nodes.Object_88 as THREE.Mesh).geometry}
             material={materials['50c2259ef1b62ea11389']}
           />
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes.Object_90.geometry}
+            geometry={(nodes.Object_90 as THREE.Mesh).geometry}
             material={materials['994433e619f1f1513042']}
           />
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes.Object_92.geometry}
+            geometry={(nodes.Object_92 as THREE.Mesh).geometry}
             material={materials['16d76ca3cbeebab956f0']}
           />
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes.Object_94.geometry}
+            geometry={(nodes.Object_94 as THREE.Mesh).geometry}
             material={materials['15e105904fe114289c62']}
           />
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes.Object_96.geometry}
+            geometry={(nodes.Object_96 as THREE.Mesh).geometry}
             material={materials.a86dab30a71ca989ac8c}
           />
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes.Object_98.geometry}
+            geometry={(nodes.Object_98 as THREE.Mesh).geometry}
             material={materials.a86dab30a71ca989ac8c}
           />
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes.Object_100.geometry}
+            geometry={(nodes.Object_100 as THREE.Mesh).geometry}
             material={materials.a86dab30a71ca989ac8c}
           />
         </group>
