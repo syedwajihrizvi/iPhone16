@@ -1,7 +1,6 @@
 import ComparisionCard from "./ComparisionCard"
 import { appleIntelligenceIcon, a18Icon, cameraControlIcon, 
          baseCameraIcon, proCameraIcon, batteryIcon, a18ProIcon,  } from "../utils/image"
-import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/all";
 import gsap from "gsap";
 
