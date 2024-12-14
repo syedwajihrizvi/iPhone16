@@ -1,7 +1,22 @@
 import { hero_imgs } from "../utils/image"
 import ResponsiveImage from "./ResponsiveImage"
+import gsap from 'gsap'
+import { useGSAP } from "@gsap/react"
 
 function Hero() {
+    useGSAP(() => {
+        gsap.to('.hero__detail', {
+            opacity: 1,
+            top: 0,
+            duration: 1
+        }),
+        gsap.to('.hero .img', {
+            opacity: 1,
+            top: 0,
+            duration: 1
+        })
+    }, [])
+
     return (
         <section className="hero">
             <ResponsiveImage imageData={hero_imgs}/>

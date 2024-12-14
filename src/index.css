@@ -258,11 +258,17 @@ html {
   max-width: 1280px;
   width: 100%;
   object-fit: cover;
+  position: relative;
+  opacity: 0;
+  top: -100px
 }
 
 .hero__detail {
   text-align: center;
   margin-top: 3rem;
+  opacity: 0;
+  position: relative;
+  top: 100px
 }
 
 
