@@ -54,19 +54,20 @@ function Highlights() {
         duration: 0
     })
 
-    const { isPlaying, highlightID } = highlightsState
+    const { isPlaying, highlightID, duration } = highlightsState
 
     useEffect(() => {
         if (isPlaying) {
             const interval = setInterval(() => {
                 setHighlightsState((prevState) => {
                     const newState = {...prevState, duration: prevState.duration + 1}
-                    if (newState.duration >= 5) {
+                    if (!(prevState.highlightID >= maxHighLightCount) && newState.duration >= 5) {
                         newState.highlightID += 1
                         newState.duration = 0
                     }
-                    if (prevState.highlightID >= maxHighLightCount)
+                    if (prevState.highlightID >= maxHighLightCount && newState.duration >= 5) {
                         newState.isPlaying = false
+                    }
                     return newState
                 }
                 )
@@ -120,10 +121,31 @@ function Highlights() {
         })
     }, [])
 
-    useGSAP(() => {
+    useEffect(() => {
+        const progressRef = progressRefs.current[highlightID]
+        const animation = gsap.to(progressRef, {
+            width: '4rem',
+            duration: 5,
+            paused: true,
+            onComplete : () => {
+                if (progressRef)
+                    progressRef.style.width = '0'
+            }
+        })
 
-        gsap.to('.highlight__item', {
-            xPercent: -highlightID*100,
+        if (isPlaying) {
+            animation.resume()
+        } else {
+            animation.pause()
+        }
+
+        return () => {animation.kill()}
+    }, [isPlaying, highlightID])
+
+    useGSAP(() => {
+        const highlightItem = document.querySelector('.highlight__item')?.getBoundingClientRect().width as number
+        gsap.to('.highlights__container', {
+            scrollLeft: highlightID*highlightItem,
             duration: 1
         })
 
@@ -132,9 +154,6 @@ function Highlights() {
             left: '5%',
             duration: 1
         })
-    
-        // Animate the description since GSAP is not synced with the useEffect
-        // Animate the progress bars
         progressBarRefs.current.forEach(progressBar => {
             gsap.to(progressBar, {
                 width: '1rem',
@@ -175,14 +194,39 @@ function Highlights() {
             top: 0
         })
     }, [])
+
     const renderIcon = () => {
-        if (highlightID >= maxHighLightCount) {
+        if (highlightID >= maxHighLightCount && duration >= 5) {
             return <VscDebugRestart className="icon"/>
         }
         else if (!isPlaying) {
             return <FaPlay className="icon"/>
         } 
         return <FaPause className="icon"/>
+    }
+
+    const resetProgress = () => {
+        progressRefs.current.forEach(progressRef => {
+            if (progressRef)
+                progressRef.style.width = '0'}
+        )
+    }
+
+    const handleControlButton = () => {
+        // Replay button clicked
+        if (highlightID >= maxHighLightCount) {
+            resetProgress()
+            setHighlightsState(prevState => ({...prevState, isPlaying: true, highlightID: 0, duration: 0}))
+        } else if (isPlaying) {
+            setHighlightsState(prevState => ({...prevState, isPlaying: false}))
+        } else if (!isPlaying) {
+            setHighlightsState(prevState => ({...prevState, isPlaying: true}))
+        }
+    }
+
+    const handleNavSelect = (index: number) => {
+        resetProgress()
+        setHighlightsState((prevState) => ({...prevState, highlightID: index, isPlaying: false}))
     }
 
     return (
@@ -204,17 +248,7 @@ function Highlights() {
                 ))}
             </div>
             <div className="highlights__controls">
-                <span className="icon__container" onClick={() => {
-                    if (highlightID >= maxHighLightCount) {
-                        setHighlightsState(prevState => ({...prevState, isPlaying: true, highlightID: 0}))
-                    }
-                    else if (isPlaying) {
-                        setHighlightsState(prevState => ({...prevState, isPlaying: false}))
-                    } 
-                    else if (!isPlaying) {
-                        setHighlightsState(prevState => ({...prevState, isPlaying: true}))
-                    }
-                }}>
+                <span className="icon__container" onClick={handleControlButton}>
                     {renderIcon()}
                 </span>
                 <div className="highlight__navigation">
@@ -222,7 +256,7 @@ function Highlights() {
                         <span key={index} className="highlight__progress-bar"
                         ref={(element) => progressBarRefs.current.push(element)}
                         onClick={() => {
-                            setHighlightsState((prevState) => ({...prevState, highlightID: index, isPlaying: false}))
+                            handleNavSelect(index)
                         }}>
                             <div className="highlight__progress"
                             ref={(element) => progressRefs.current.push(element)}/>

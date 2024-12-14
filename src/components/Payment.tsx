@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { tradeIcon, payIcon, deliveryIcon, messageIcon, connectIcon, shopIcon } from "../utils/image"
 import { IoIosAddCircle } from "react-icons/io";
 import ResponsiveImage from "./ResponsiveImage"
@@ -43,13 +43,32 @@ const paymentBenefits = [
 ]
 
 function Payment() {
- 
     const [current, setCurrent] = useState(0)
-    
+    const chevronControlBaseClass = 'features__control-button'
+    const chevronControlDisabledClass = 'features__control-button__disabled'
+    const chevronControlEnabledClass = 'features__control-button__interact'
+    const [currentScrollPoint, setCurrentScrollPoint] = useState('min')
+
+    useEffect(() => {
+        const paymentFlexContainer = document.querySelector('.payment-flex')
+        paymentFlexContainer?.addEventListener('scroll', () => {
+            const scrollLeft = paymentFlexContainer.scrollLeft
+            const maxScrollWidth = paymentFlexContainer.scrollWidth - paymentFlexContainer.clientWidth
+            if (scrollLeft === 0) {
+                setCurrentScrollPoint('min')
+            } else if (scrollLeft >= maxScrollWidth) {
+                setCurrentScrollPoint('max')
+            } else {
+                setCurrentScrollPoint('middle')
+            }
+        })
+    }, [])
+
     useGSAP(() => {
-        gsap.to('.benefit', {
+        const benefitWidth = document.querySelector('.benefit')?.getBoundingClientRect().width as number
+        gsap.to('.payment-flex', {
+            scrollLeft: current*benefitWidth,
             duration: 1,
-            xPercent: -current*100
         })
     }, [current])
 
@@ -67,11 +86,20 @@ function Payment() {
         })
     }, [])
 
-    const renderControlButtonClass = (baseIndex: number) => {
-        let baseClass = 'features__control-button'
-        baseClass += current == baseIndex ? ' features__control-button__disabled' : ' features__control-button__interact'
-        return baseClass
+    const renderLeftNavClass = () => {
+        if (currentScrollPoint == "min") {
+            return `${chevronControlBaseClass} ${chevronControlDisabledClass}`
+        }
+        return `${chevronControlBaseClass} ${chevronControlEnabledClass}`
     }
+
+    const renderRightNavClass = () => {
+        if (currentScrollPoint == "max") {
+            return `${chevronControlBaseClass} ${chevronControlDisabledClass}`
+        }
+        return `${chevronControlBaseClass} ${chevronControlEnabledClass}`
+    }
+
     return (
         <section className="payment">
             <header className="payment__header">
@@ -94,10 +122,10 @@ function Payment() {
             </div>
             <div className="features__flex-controls">
                 <div className="features__button-group">
-                    <span className={renderControlButtonClass(0)}>
+                    <span className={renderLeftNavClass()}>
                         <FaChevronLeft fontSize='2rem' onClick={() => setCurrent((prevValue) => Math.max(prevValue-1, 0))}/>
                     </span>
-                    <span className={renderControlButtonClass(3)}>
+                    <span className={renderRightNavClass()}>
                         <FaChevronRight fontSize='2rem' onClick={() => setCurrent((prevValue) => Math.min(prevValue+1, 3))}/>
                     </span>
                 </div>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { featureOne, featureTwo, featureThree, featureFour } from "../utils/image"
 import ResponsiveImage from "./ResponsiveImage"
 import { FaChevronRight, FaChevronLeft } from "react-icons/fa6";
@@ -48,8 +48,26 @@ const features = [
 ]
 
 function Features() {
+    const chevronControlBaseClass = 'features__control-button'
+    const chevronControlDisabledClass = 'features__control-button__disabled'
+    const chevronControlEnabledClass = 'features__control-button__interact'
     const [current, setCurrent] = useState(0)
-    
+    const [currentScrollPoint, setCurrentScrollPoint] = useState('min')
+    useEffect(() => {
+        const featureFlexContainer = document.querySelector('.features-flex')
+        featureFlexContainer?.addEventListener('scroll', () => {
+            const scrollLeft = featureFlexContainer.scrollLeft
+            const maxScrollWidth = featureFlexContainer.scrollWidth - featureFlexContainer.clientWidth
+            if (scrollLeft === 0) {
+                setCurrentScrollPoint('min')
+            } else if (scrollLeft >= maxScrollWidth) {
+                setCurrentScrollPoint('max')
+            } else {
+                setCurrentScrollPoint('middle')
+            }
+        })
+    }, [])
+
     useGSAP(() => {
         gsap.to('.feature', {
             scrollTrigger: {
@@ -64,16 +82,25 @@ function Features() {
     }, [])
 
     useGSAP(() => {
-        gsap.to('.feature', {
+        const featureWidth = document.querySelector('.feature')?.getBoundingClientRect().width as number
+        gsap.to('.features-flex', {
+            scrollLeft: current*featureWidth,
             duration: 1,
-            xPercent: -current*100
         })
     }, [current])
 
-    const renderControlButtonClass = (baseIndex: number) => {
-        let baseClass = 'features__control-button'
-        baseClass += current == baseIndex ? ' features__control-button__disabled' : ' features__control-button__interact'
-        return baseClass
+    const renderLeftNavClass = () => {
+        if (currentScrollPoint == "min") {
+            return `${chevronControlBaseClass} ${chevronControlDisabledClass}`
+        }
+        return `${chevronControlBaseClass} ${chevronControlEnabledClass}`
+    }
+
+    const renderRightNavClass = () => {
+        if (currentScrollPoint == "max") {
+            return `${chevronControlBaseClass} ${chevronControlDisabledClass}`
+        }
+        return `${chevronControlBaseClass} ${chevronControlEnabledClass}`
     }
 
     return (
@@ -88,10 +115,10 @@ function Features() {
             </div>
             <div className="features__flex-controls">
                 <div className="features__button-group">
-                    <span className={renderControlButtonClass(0)}>
+                    <span className={renderLeftNavClass()}>
                         <FaChevronLeft fontSize='2rem' onClick={() => setCurrent((prevValue) => Math.max(prevValue-1, 0))}/>
                     </span>
-                    <span className={renderControlButtonClass(3)}>
+                    <span className={renderRightNavClass()}>
                         <FaChevronRight fontSize='2rem' onClick={() => setCurrent((prevValue) => Math.min(prevValue+1, 3))}/>
                     </span>
                 </div>

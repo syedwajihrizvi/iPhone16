@@ -25,9 +25,10 @@ function CamereDetails() {
     const [current, setCurrent] = useState(0)
 
     useGSAP(() => {
-        gsap.to('.camera-details--flex__container', {
+        const camereDetailswidth = document.querySelector('.camera-details--flex__container')?.getBoundingClientRect().width as number
+        gsap.to('.camera-details--flex', {
+            scrollLeft: current*camereDetailswidth,
             duration: 1,
-            xPercent: -current*100,
         })
         gsap.fromTo('.camera-detail__type_detail__text', {
             opacity: 0,
@@ -44,7 +45,6 @@ function CamereDetails() {
         gsap.to('.camera-details__text', {
             'scrollTrigger': {
                 trigger: '.camera-details__text',
-                start: 'top %',
                 toggleActions: 'play none none reverse'
             },
             opacity: 1,

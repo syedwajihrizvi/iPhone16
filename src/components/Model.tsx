@@ -30,7 +30,6 @@ function Model() {
         gsap.to('.model', {
             scrollTrigger: {
                 trigger: '.model',
-                start: 'top 80%',
                 toggleActions: 'play none none reverse'
             },
             opacity: 1,

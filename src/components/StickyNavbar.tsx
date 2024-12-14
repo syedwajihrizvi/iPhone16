@@ -9,7 +9,6 @@ function StickyNavbar() {
     useEffect(() => {
         const handleScroll = () => {
             const scrollPercent = (window.scrollY/document.body.scrollHeight) * 100
-            console.log(scrollPercent)
             if (scrollPercent > 15) {
                 gsap.to('.sticky-nav', {
                     opacity: 1,
