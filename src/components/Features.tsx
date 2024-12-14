@@ -52,6 +52,19 @@ function Features() {
     
     useGSAP(() => {
         gsap.to('.feature', {
+            scrollTrigger: {
+                trigger: '.features',
+                start: 'top 80%',
+                toggleActions: 'play none none reverse'
+            },
+            opacity: 1,
+            top: 0,
+            stagger: 0.2
+        })
+    }, [])
+
+    useGSAP(() => {
+        gsap.to('.feature', {
             duration: 1,
             xPercent: -current*100
         })

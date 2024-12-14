@@ -1,5 +1,10 @@
 import { photoDetailOne, photoDetailThree, photoDetailTwo } from "../utils/image"
 import ResponsiveImage from "./ResponsiveImage"
+import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/all";
+import gsap from "gsap";
+
+gsap.registerPlugin(ScrollTrigger)
 
 const photoDetails = [
     {
@@ -38,6 +43,30 @@ const photoDetails = [
 ]
 
 function PhotoDetails() {
+
+    useGSAP(() => {
+        gsap.to('.photo-details__header', {
+            scrollTrigger: {
+                trigger: '.photo-details',
+                start: 'top 80%',
+                toggleActions: 'play none none reverse'
+            },
+            opacity: 1,
+            duration: 1,
+            top: 0
+        })
+        gsap.to('photo-details__content', {
+            scrollTrigger: {
+                trigger: '.photo-details',
+                start: 'top 90%',
+                toggleActions: 'play none none reverse'
+            },
+            opacity: 1,
+            duration: 1,
+            top: 0
+        })
+    })
+
     return (
         <section className="photo-details">
             <header className="photo-details__header">
@@ -50,11 +79,11 @@ function PhotoDetails() {
             <div className="grid grid-1x2">
                 {photoDetails.map(photoDetail => (
                     <>
-                    <div className="photo-details__content">
-                        {photoDetail.heading}
-                        {photoDetail.description}
-                    </div>
-                    {photoDetail.image}
+                        <div className="photo-details__content">
+                            {photoDetail.heading}
+                            {photoDetail.description}
+                        </div>
+                        {photoDetail.image}
                     </>
                 ))}
             </div>

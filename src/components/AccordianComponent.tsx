@@ -9,7 +9,6 @@ interface Props {
 function AccordianComponent({title, content}: Props) {
     const [expanded, setExpanded] = useState(false)
     const expandableContent = useRef<HTMLDivElement>(null)
-    console.log("Clicked")
     useEffect(() => {
         if (expandableContent.current)
             expandableContent.current?.classList.toggle('accordian__content__expanded')

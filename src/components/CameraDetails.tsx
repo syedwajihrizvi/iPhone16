@@ -3,7 +3,10 @@ import ResponsiveImage from "./ResponsiveImage"
 import { detailOne, detailTwo, detailThree } from "../utils/image"
 import { useState } from "react"
 import gsap from "gsap"
+import { ScrollTrigger } from "gsap/all";
 import { useGSAP } from "@gsap/react"
+
+gsap.registerPlugin(ScrollTrigger)
 
 function CamereDetails() {
     const images = [
@@ -22,7 +25,6 @@ function CamereDetails() {
     const [current, setCurrent] = useState(0)
 
     useGSAP(() => {
-        console.log("Called animation")
         gsap.to('.camera-details--flex__container', {
             duration: 1,
             xPercent: -current*100,
@@ -37,6 +39,19 @@ function CamereDetails() {
             duration: 0.5
         })
     }, [current])
+
+    useGSAP(() => {
+        gsap.to('.camera-details__text', {
+            'scrollTrigger': {
+                trigger: '.camera-details__text',
+                start: 'top %',
+                toggleActions: 'play none none reverse'
+            },
+            opacity: 1,
+            duration: 1,
+            top: 0
+        })
+    }, [])
 
     return (
         <section className="camera-details">

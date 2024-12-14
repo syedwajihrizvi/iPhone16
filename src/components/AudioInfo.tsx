@@ -1,5 +1,10 @@
 import ResponsiveImage from "./ResponsiveImage"
 import { audioImage } from "../utils/image"
+import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/all";
+import gsap from "gsap";
+
+gsap.registerPlugin(ScrollTrigger)
 
 const audioFeatures = [
     {
@@ -21,7 +26,21 @@ const audioFeatures = [
                       for the movies.`
     }
 ]
+
 function AudioInfo() {
+    useGSAP(() => {
+        gsap.to('.audio-info', {
+            scrollTrigger: {
+                trigger: '.audio-info',
+                start: 'top 80%',
+                toggleActions: 'play none none reverse'
+            },
+            duration: 1,
+            opacity: 1,
+            left: 0
+        })
+    }, [])
+
     return (
         <section className="audio-info">
             <div className="container">

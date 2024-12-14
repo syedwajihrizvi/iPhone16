@@ -6,6 +6,11 @@ import IPhoneModelView from './iPhoneModelView'
 import { Canvas } from '@react-three/fiber'
 import { View } from "@react-three/drei"
 import IPhone16ProModelView from './iPhone16ProModelView'
+import { useGSAP } from '@gsap/react'
+import { ScrollTrigger } from "gsap/all";
+import gsap from 'gsap'
+
+gsap.registerPlugin(ScrollTrigger)
 
 function Model() {
     const [variation, setVariation] = useState<ModelVariation>({size: 'small', type: 'normal'})
@@ -20,6 +25,19 @@ function Model() {
     const largeNormal = useRef(new THREE.Group())
     const smallPro = useRef(new THREE.Group())
     const largePro = useRef(new THREE.Group())
+
+    useGSAP(() => {
+        gsap.to('.model', {
+            scrollTrigger: {
+                trigger: '.model',
+                start: 'top 80%',
+                toggleActions: 'play none none reverse'
+            },
+            opacity: 1,
+            top: 0,
+            duration: 1,
+        })
+    }, [])
 
     const renderSizeClass = (size: string) => {
         let sizeClass = 'iPhone-size'

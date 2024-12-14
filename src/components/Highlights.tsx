@@ -1,4 +1,3 @@
-
 import { FaPlay, FaPause } from "react-icons/fa";
 import { FaRegCirclePlay } from "react-icons/fa6";
 import { VscDebugRestart } from "react-icons/vsc";
@@ -165,6 +164,17 @@ function Highlights() {
         })
     }, [])
 
+    useGSAP(() => {
+        gsap.to('.highlights', {
+            scrollTrigger: {
+                trigger: '.highlights',
+                start: 'top 80%',
+                toggleActions: 'play none none reverse'
+            },
+            opacity: 1,
+            top: 0
+        })
+    }, [])
     const renderIcon = () => {
         if (highlightID >= maxHighLightCount) {
             return <VscDebugRestart className="icon"/>

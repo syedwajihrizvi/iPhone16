@@ -3,8 +3,11 @@ import { tradeIcon, payIcon, deliveryIcon, messageIcon, connectIcon, shopIcon } 
 import { IoIosAddCircle } from "react-icons/io";
 import ResponsiveImage from "./ResponsiveImage"
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
-import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/all";
+import gsap from "gsap";
+
+gsap.registerPlugin(ScrollTrigger)
 
 const paymentBenefits = [
     {
@@ -49,6 +52,20 @@ function Payment() {
             xPercent: -current*100
         })
     }, [current])
+
+    useGSAP(() => {
+        gsap.to('.benefit', {
+            scrollTrigger: {
+                trigger: '.payment',
+                start: 'top 90%',
+                toggleActions: 'play none none reverse'
+            },
+            opacity: 1,
+            top: 0,
+            duration: 1,
+            stagger: 0.2
+        })
+    }, [])
 
     const renderControlButtonClass = (baseIndex: number) => {
         let baseClass = 'features__control-button'
