@@ -1,7 +1,7 @@
-import hero_xlarge from "../utils/images/hero_xlarge.png"
-import hero_large from "../utils/images/hero_large.png"
-import hero_medium from "../utils/images/hero_medium.png"
-import hero_small from "../utils/images/hero_small.png"
+import hero_xlarge from "../utils/images/hero_xlarge.webp"
+import hero_large from "../utils/images/hero_large.webp"
+import hero_medium from "../utils/images/hero_medium.webp"
+import hero_small from "../utils/images/hero_small.webp"
 
 import highlight_one_small from "../utils/images/highlight1/small.jpg"
 import highlight_one_medium from "../utils/images/highlight1/medium.jpg"
