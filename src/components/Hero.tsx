@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import { hero_imgs } from "../utils/image"
 import ResponsiveImage from "./ResponsiveImage"
 import gsap from 'gsap'
